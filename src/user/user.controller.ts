@@ -1,4 +1,9 @@
+/* import { CreateUserDto } from './dto/user.dto';
+import { UserEntity } from './entity/user.entity'; */
+import { UserService } from './user.service';
 import { Controller } from '@nestjs/common';
 
-@Controller('user')
-export class UserController {}
+@Controller('users')
+export class UserController {
+  constructor(private userService: UserService) {}
+}
