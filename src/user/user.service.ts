@@ -26,4 +26,10 @@ export class UserService {
     await this.Users.save(newUser);
     return newUser;
   }
+
+  public async sendUserData(userId: string): Promise<UserEntity> {
+    const user = await UserEntity.findOne({ where: { id: userId } });
+    user.password = undefined;
+    return user;
+  }
 }

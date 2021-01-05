@@ -1,7 +1,9 @@
+import { userWithTokens } from './local.strategy';
 import { CreateUserDto } from './../user/dto/user.dto';
 import { UserService } from './../user/user.service';
 import { forwardRef, HttpException, HttpStatus, Inject } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { createTokens } from 'src/utils/generateToken';
 export class AuthenticationService {
   constructor(
     @Inject(forwardRef(() => UserService))
@@ -17,7 +19,7 @@ export class AuthenticationService {
         password: hashedPassword,
       });
       createdUser.password = undefined;
-      return createdUser;
+      return { ...createdUser, ...createTokens(createdUser) };
     } catch (error) {
       if (error.code === '23505') {
         throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
@@ -29,7 +31,10 @@ export class AuthenticationService {
     }
   }
 
-  public async getAuthenticatedUser(email: string, hashedPassword: string) {
+  public async getAuthenticatedUser(
+    email: string,
+    hashedPassword: string,
+  ): Promise<userWithTokens> {
     try {
       const user = await this.userService.getByEmail(email);
       const isPasswordMatching = await bcrypt.compare(
@@ -43,7 +48,7 @@ export class AuthenticationService {
         );
       }
       user.password = undefined;
-      return user;
+      return { user: user, ...createTokens(user) };
     } catch (error) {
       throw new HttpException(
         'Wrong credentials provided',

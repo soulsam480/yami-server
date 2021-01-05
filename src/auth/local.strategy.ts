@@ -3,7 +3,11 @@ import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { AuthenticationService } from './auth.service';
-
+export interface userWithTokens {
+  user: UserEntity;
+  accessToken: string;
+  refreshToken: string;
+}
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authenticationService: AuthenticationService) {
@@ -11,7 +15,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       usernameField: 'email',
     });
   }
-  async validate(email: string, password: string): Promise<UserEntity> {
+  async validate(email: string, password: string): Promise<userWithTokens> {
     return this.authenticationService.getAuthenticatedUser(email, password);
   }
 }

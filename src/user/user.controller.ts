@@ -1,9 +1,14 @@
-/* import { CreateUserDto } from './dto/user.dto';
-import { UserEntity } from './entity/user.entity'; */
 import { UserService } from './user.service';
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
+import RequestWithUser from 'src/auth/requestWithUser.interface';
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @Get()
+  sendUserData(@Req() request: RequestWithUser) {
+    const userId = request.userId;
+    return this.userService.sendUserData(userId);
+  }
 }
