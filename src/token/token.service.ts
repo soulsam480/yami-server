@@ -5,7 +5,7 @@ import { createTokens } from 'src/utils/generateToken';
 @Injectable()
 export class TokenService {
   public async sendNewTokens(userId: string) {
-    const user = await UserEntity.findOne({ where: { id: userId } });
+    const user = await UserEntity.findOne({ id: userId });
     return createTokens(user);
   }
 }

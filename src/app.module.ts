@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { TokenModule } from './token/token.module';
+import { ProductModule } from './product/product.module';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -16,6 +17,7 @@ import { TokenModule } from './token/token.module';
     DatabaseModule,
     AuthenticationModule,
     TokenModule,
+    ProductModule,
   ],
 })
 export class AppModule {
