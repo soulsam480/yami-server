@@ -4,10 +4,10 @@
 
 Concepts learned:
 
-[x] Module, Service, Controller Basics
-[X] Setting up DB and DB entities
-[X] Setting up Auth
-[X] Setting up Middleware
-[X] Dependency Injection and imports
-[ ] More to learn...
-[ ] Deep Dive
+- [x] Module, Service, Controller Basics
+- [X] Setting up DB and DB entities
+- [X] Setting up Auth
+- [X] Setting up Middleware
+- [X] Dependency Injection and imports
+- [ ] More to learn...
+- [ ] Deep Dive
