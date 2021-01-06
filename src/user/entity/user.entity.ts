@@ -1,9 +1,11 @@
+import { OrderEntity } from './../../orders/entities/order.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -25,6 +27,9 @@ export class UserEntity extends BaseEntity {
 
   @Column({ type: 'text', nullable: true })
   imgUrl: string;
+
+  @OneToMany(() => OrderEntity, (orders) => orders.user)
+  orders: string;
 
   @CreateDateColumn()
   createdAt: Date;

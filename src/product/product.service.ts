@@ -1,5 +1,5 @@
 import { ProductEntity } from './entities/product.entity';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -12,6 +12,14 @@ export class ProductService {
     private Products: Repository<ProductEntity>,
   ) {}
   async create(createProductDto: CreateProductDto) {
+    const productFound = await this.Products.findOne({
+      name: createProductDto.name,
+    });
+    if (productFound)
+      return new HttpException(
+        'Product with the same name already exists!',
+        HttpStatus.BAD_REQUEST,
+      );
     const newProd = this.Products.create(createProductDto);
     await newProd.save();
     return newProd;

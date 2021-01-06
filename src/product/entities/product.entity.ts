@@ -8,7 +8,7 @@ export class ProductEntity extends BaseEntity {
   @Column('text', { nullable: false, unique: true })
   name: string;
 
-  @Column('integer', { nullable: false, unique: false })
+  @Column('integer', { nullable: false })
   price: number;
 
   @Column('text', { nullable: true })

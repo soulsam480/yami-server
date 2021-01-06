@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { TokenModule } from './token/token.module';
 import { ProductModule } from './product/product.module';
+import { OrdersModule } from './orders/orders.module';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -18,6 +19,7 @@ import { ProductModule } from './product/product.module';
     AuthenticationModule,
     TokenModule,
     ProductModule,
+    OrdersModule,
   ],
 })
 export class AppModule {

@@ -1,4 +1,4 @@
-import { CreateUserDto } from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { UserEntity } from './entity/user.entity';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,7 +26,15 @@ export class UserService {
     await this.Users.save(newUser);
     return newUser;
   }
-
+  public async updateUser(userId: string, user: UpdateUserDto) {
+    const updateUser = await this.Users.update(
+      { id: userId },
+      {
+        ...user,
+      },
+    );
+    return updateUser;
+  }
   public async sendUserData(userId: string): Promise<UserEntity> {
     const user = await UserEntity.findOne({ where: { id: userId } });
     user.password = undefined;
