@@ -24,6 +24,8 @@ import { OrdersModule } from './orders/orders.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(IsAuthTokenMiddleware).forRoutes('/users', '/token');
+    consumer
+      .apply(IsAuthTokenMiddleware)
+      .forRoutes('/users', '/token', '/orders');
   }
 }

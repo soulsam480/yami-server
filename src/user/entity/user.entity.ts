@@ -29,7 +29,7 @@ export class UserEntity extends BaseEntity {
   imgUrl: string;
 
   @OneToMany(() => OrderEntity, (orders) => orders.user)
-  orders: string;
+  orders: OrderEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

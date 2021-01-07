@@ -1,3 +1,4 @@
+import { ProductInCart } from './../interfaces/cart.orders';
 import { UserEntity } from './../../user/entity/user.entity';
 import {
   BaseEntity,
@@ -31,8 +32,12 @@ export class OrderEntity extends BaseEntity {
   @ManyToOne(() => UserEntity, (user) => user.orders)
   user: UserEntity;
 
-  @Column('text', { nullable: false, array: true })
-  products: string[];
+  @Column({
+    type: 'jsonb',
+    array: false,
+    nullable: false,
+  })
+  cart: ProductInCart[];
 
   @Column('text', { nullable: false })
   address: string;

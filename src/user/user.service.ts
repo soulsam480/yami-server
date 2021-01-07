@@ -1,3 +1,4 @@
+import { OrderEntity } from './../orders/entities/order.entity';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { UserEntity } from './entity/user.entity';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
@@ -9,6 +10,8 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private Users: Repository<UserEntity>,
+    @InjectRepository(OrderEntity)
+    private Orders: Repository<OrderEntity>,
   ) {}
 
   public async getByEmail(email: string) {
@@ -35,9 +38,12 @@ export class UserService {
     );
     return updateUser;
   }
-  public async sendUserData(userId: string): Promise<UserEntity> {
+  public async sendUserData(userId: string) {
     const user = await UserEntity.findOne({ where: { id: userId } });
+    const userOrders = await this.Orders.find({
+      where: { user: { id: userId } },
+    });
     user.password = undefined;
-    return user;
+    return { user: user, orders: userOrders };
   }
 }

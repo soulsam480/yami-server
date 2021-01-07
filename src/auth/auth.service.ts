@@ -60,7 +60,11 @@ export class AuthenticationService {
         );
       }
       user.password = undefined;
-      return { user: user, ...createTokens(user) };
+      const userData = await this.userService.sendUserData(user.id);
+      return {
+        ...userData,
+        ...createTokens(user),
+      };
     } catch (error) {
       throw new HttpException(
         'Wrong credentials provided',

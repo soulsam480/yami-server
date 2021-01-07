@@ -1,26 +1,28 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
+import RequestWithUser from 'src/auth/requestWithUser.interface';
 // import { UpdateOrderDto } from './dto/update-order.dto';
 
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  // @Post()
-  // create(@Body() createOrderDto: CreateOrderDto) {
-  //   return this.ordersService.create(createOrderDto);
-  // }
+  @Post()
+  createOrder(@Body() createOrderDto: CreateOrderDto) {
+    return this.ordersService.create(createOrderDto);
+  }
 
   // @Get()
   // findAll() {
   //   return this.ordersService.findAll();
   // }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.ordersService.findOne(+id);
-  // }
+  @Get(':id')
+  findOneByUser(@Param('id') id: string, @Req() request: RequestWithUser) {
+    const { userId } = request;
+    return this.ordersService.findOneByUser(id, userId);
+  }
 
   // @Put(':id')
   // update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
