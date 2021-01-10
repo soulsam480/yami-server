@@ -1,7 +1,7 @@
 import { ProductEntity } from './entities/product.entity';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Raw, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 // import { UpdateProductDto } from './dto/update-product.dto';
 
@@ -34,6 +34,17 @@ export class ProductService {
   async findOne(id: string) {
     const product = await this.Products.findOne({ id: id });
     return product;
+  }
+
+  async sendByCat(cat: string) {
+    const products = await this.Products.find({
+      where: {
+        categories: Raw((alias) => `${alias} @> ARRAY[:categories]`, {
+          categories: cat,
+        }),
+      },
+    });
+    return products;
   }
 
   // update(id: number, updateProductDto: UpdateProductDto) {

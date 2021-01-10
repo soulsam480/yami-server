@@ -30,6 +30,11 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
+  @Get('cat/:cat')
+  sendByCategory(@Param('cat') cat: string) {
+    return this.productService.sendByCat(cat);
+  }
+
   // @Put(':id')
   // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
   //   return this.productService.update(+id, updateProductDto);
